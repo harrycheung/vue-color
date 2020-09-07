@@ -15,7 +15,7 @@ import Saturation from './components/common/Saturation.vue'
 import ColorMixin from './mixin/color.js'
 
 const VueColor = {
-  version: '2.7.1',
+  version: '3.0.0',
   Compact,
   Grayscale,
   Material,
