@@ -73,79 +73,87 @@
           <h2>Hue Slider</h2>
         </div>
       </div>
+      <div class="demo-list">
+        <div class="demo-item">
+          <light-slider-picker v-model="colors"></light-slider-picker>
+          <h2>Light Slider</h2>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import material from "../src/components/Material.vue";
-import compact from "../src/components/Compact.vue";
-import grayscale from "../src/components/Grayscale.vue";
-import swatches from "../src/components/Swatches.vue";
-import slider from "../src/components/Slider.vue";
-import sketch from "../src/components/Sketch.vue";
-import chrome from "../src/components/Chrome.vue";
-import photoshop from "../src/components/Photoshop.vue";
-import hueslider from "../src/components/HueSlider.vue";
+import material from '../src/components/Material.vue'
+import compact from '../src/components/Compact.vue'
+import grayscale from '../src/components/Grayscale.vue'
+import swatches from '../src/components/Swatches.vue'
+import slider from '../src/components/Slider.vue'
+import sketch from '../src/components/Sketch.vue'
+import chrome from '../src/components/Chrome.vue'
+import photoshop from '../src/components/Photoshop.vue'
+import hueslider from '../src/components/HueSlider.vue'
+import lightslider from '../src/components/LightSlider.vue'
 
 let defaultProps = {
-  hex: "#194d33e6",
+  hex: '#194d33e6',
   hsl: {
     h: 150,
     s: 0.5,
     l: 0.2,
-    a: 0.9,
+    a: 0.9
   },
   hsv: {
     h: 150,
     s: 0.66,
     v: 0.3,
-    a: 0.9,
+    a: 0.9
   },
   rgba: {
     r: 159,
     g: 96,
     b: 43,
-    a: 0.9,
+    a: 0.9
   },
-  a: 0.9,
-};
+  a: 0.9
+}
 
 export default {
   components: {
-    "material-picker": material,
-    "compact-picker": compact,
-    "grayscale-picker": grayscale,
-    "swatches-picker": swatches,
-    "slider-picker": slider,
-    "sketch-picker": sketch,
-    "chrome-picker": chrome,
-    "photoshop-picker": photoshop,
-    "hue-slider-picker": hueslider,
+    'material-picker': material,
+    'compact-picker': compact,
+    'grayscale-picker': grayscale,
+    'swatches-picker': swatches,
+    'slider-picker': slider,
+    'sketch-picker': sketch,
+    'chrome-picker': chrome,
+    'photoshop-picker': photoshop,
+    'hue-slider-picker': hueslider,
+    'light-slider-picker': lightslider
   },
   data() {
     return {
-      colors: defaultProps,
-    };
+      colors: defaultProps
+    }
   },
   computed: {
     bgc() {
-      return this.colors.hex;
-    },
+      return this.colors.hex
+    }
   },
   methods: {
     onOk() {
-      console.log("ok");
+      console.log('ok')
     },
     onCancel() {
-      console.log("cancel");
+      console.log('cancel')
     },
     updateValue(value) {
-      this.colors = value;
-    },
+      this.colors = value
+    }
   },
-  created() {},
-};
+  created() {}
+}
 </script>
 
 <style>
@@ -154,7 +162,7 @@ export default {
   padding: 0;
 }
 html {
-  font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
+  font-family: 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif;
 }
 
 .header-container {

@@ -1,17 +1,17 @@
 <template>
   <div role="application" aria-label="Slider color picker" class="vc-slider">
-    <div class="vc-slider-hue-warp">
-      <hue v-model="colors" @change="hueChange"></hue>
+    <div class="vc-slider-gray-warp">
+      <light v-model="colors" @change="lightChange"></light>
     </div>
   </div>
 </template>
 
 <script>
 import colorMixin from '../mixin/color'
-import hue from './common/Hue.vue'
+import light from './common/Light.vue'
 
 export default {
-  name: 'HueSlider',
+  name: 'LightSlider',
   mixins: [colorMixin],
   props: {
     swatches: {
@@ -22,7 +22,7 @@ export default {
     }
   },
   components: {
-    hue
+    light
   },
   computed: {
     activeOffset() {
@@ -41,7 +41,7 @@ export default {
     }
   },
   methods: {
-    hueChange(data) {
+    lightChange(data) {
       this.colorChange(data)
     }
   }
@@ -53,11 +53,11 @@ export default {
   position: relative;
   width: 410px;
 }
-.vc-slider-hue-warp {
+.vc-slider-gray-warp {
   height: 20px;
   position: relative;
 }
-.vc-slider-hue-warp >>> .vc-hue-picker {
+.vc-slider-gray-warp >>> .vc-light-picker {
   width: 8px;
   height: 24px;
   border-radius: 0;
