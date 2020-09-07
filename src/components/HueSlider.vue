@@ -7,45 +7,45 @@
 </template>
 
 <script>
-import colorMixin from "../mixin/color";
-import hue from "./common/Hue.vue";
+import colorMixin from '../mixin/color'
+import hue from './common/Hue.vue'
 
 export default {
-  name: "Slider",
+  name: 'Slider',
   mixins: [colorMixin],
   props: {
     swatches: {
       type: Array,
       default() {
-        return [".80", ".65", ".50", ".35", ".20"];
-      },
-    },
+        return ['.80', '.65', '.50', '.35', '.20']
+      }
+    }
   },
   components: {
-    hue,
+    hue
   },
   computed: {
     activeOffset() {
-      const hasBlack = this.swatches.includes("0");
-      const hasWhite = this.swatches.includes("1");
-      const hsl = this.colors.hsl;
+      const hasBlack = this.swatches.includes('0')
+      const hasWhite = this.swatches.includes('1')
+      const hsl = this.colors.hsl
 
       if (Math.round(hsl.s * 100) / 100 === 0.5) {
-        return Math.round(hsl.l * 100) / 100;
+        return Math.round(hsl.l * 100) / 100
       } else if (hasBlack && hsl.l === 0) {
-        return 0;
+        return 0
       } else if (hasWhite && hsl.l === 1) {
-        return 1;
+        return 1
       }
-      return -1;
-    },
+      return -1
+    }
   },
   methods: {
     hueChange(data) {
-      this.colorChange(data);
-    },
-  },
-};
+      this.colorChange(data)
+    }
+  }
+}
 </script>
 
 <style scoped>
