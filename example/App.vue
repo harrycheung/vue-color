@@ -79,6 +79,24 @@
           <h2>Light Slider</h2>
         </div>
       </div>
+      <div class="demo-list">
+        <div class="demo-item">
+          <hue-slider-picker
+            v-model="colors"
+            :disabled="true"
+          ></hue-slider-picker>
+          <h2>DISABLED Hue Slider</h2>
+        </div>
+      </div>
+      <div class="demo-list">
+        <div class="demo-item">
+          <light-slider-picker
+            v-model="colors"
+            :disabled="true"
+          ></light-slider-picker>
+          <h2>DISABLED Light Slider</h2>
+        </div>
+      </div>
     </div>
   </div>
 </template>

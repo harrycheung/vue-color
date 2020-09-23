@@ -1,7 +1,12 @@
 <template>
-  <div role="application" aria-label="Slider color picker" class="vc-slider">
+  <div
+    role="application"
+    aria-label="Slider color picker"
+    class="vc-slider"
+    :class="{ disabled }"
+  >
     <div class="vc-slider-hue-warp">
-      <hue v-model="colors" @change="hueChange"></hue>
+      <hue v-model="colors" @change="hueChange" :disabled="disabled"></hue>
     </div>
   </div>
 </template>
@@ -19,7 +24,8 @@ export default {
       default() {
         return ['.80', '.65', '.50', '.35', '.20']
       }
-    }
+    },
+    disabled: { type: Boolean, default: false }
   },
   components: {
     hue
@@ -64,5 +70,8 @@ export default {
   transform: translate(-4px, -3px);
   background-color: rgb(248, 248, 248);
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37);
+}
+.disabled {
+  opacity: 0.3;
 }
 </style>

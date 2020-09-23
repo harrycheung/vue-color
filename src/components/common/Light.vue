@@ -23,7 +23,8 @@ export default {
   name: 'Light',
   props: {
     value: Object,
-    onChange: Function
+    onChange: Function,
+    disabled: { type: Boolean, default: false }
   },
   computed: {
     colors() {
@@ -36,36 +37,42 @@ export default {
   methods: {
     handleChange(e, skip) {
       !skip && e.preventDefault()
-      var container = this.$refs.container
-      var containerWidth = container.clientWidth
 
-      var xOffset = container.getBoundingClientRect().left + window.pageXOffset
-      var pageX = e.pageX || (e.touches ? e.touches[0].pageX : 0)
-      var left = pageX - xOffset
+      if (!this.disabled) {
+        var container = this.$refs.container
+        var containerWidth = container.clientWidth
 
-      var l
-      if (left < 0) {
-        l = 1
-      } else if (left > containerWidth) {
-        l = 0
-      } else {
-        l = 1 - Math.round((left * 100) / containerWidth) / 100
-      }
+        var xOffset =
+          container.getBoundingClientRect().left + window.pageXOffset
+        var pageX = e.pageX || (e.touches ? e.touches[0].pageX : 0)
+        var left = pageX - xOffset
 
-      if (this.colors.hsl.l !== l) {
-        this.$emit('change', {
-          h: this.colors.hsl.h,
-          s: this.colors.hsl.s,
-          l: l,
-          a: this.colors.a,
-          source: 'rgba'
-        })
+        var l
+        if (left < 0) {
+          l = 1
+        } else if (left > containerWidth) {
+          l = 0
+        } else {
+          l = 1 - Math.round((left * 100) / containerWidth) / 100
+        }
+
+        if (this.colors.hsl.l !== l) {
+          this.$emit('change', {
+            h: this.colors.hsl.h,
+            s: this.colors.hsl.s,
+            l: l,
+            a: this.colors.a,
+            source: 'rgba'
+          })
+        }
       }
     },
     handleMouseDown(e) {
-      this.handleChange(e, true)
-      window.addEventListener('mousemove', this.handleChange)
-      window.addEventListener('mouseup', this.handleMouseUp)
+      if (!this.disabled) {
+        this.handleChange(e, true)
+        window.addEventListener('mousemove', this.handleChange)
+        window.addEventListener('mouseup', this.handleMouseUp)
+      }
     },
     handleMouseUp() {
       this.unbindEventListeners()
