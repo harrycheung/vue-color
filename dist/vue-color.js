@@ -1214,7 +1214,8 @@ exports.default = {
       type: String,
 
       default: 'horizontal'
-    }
+    },
+    disabled: { type: Boolean, default: false }
   },
   data: function data() {
     return {
@@ -1250,7 +1251,9 @@ exports.default = {
       if (this.direction === 'vertical') {
         return 0;
       } else {
-        if (this.colors.hsl.h === 0 && this.pullDirection === 'right') return '100%';
+        if (this.colors.hsl.h === 0 && this.pullDirection === 'right') {
+          return '100%';
+        }
         return this.colors.hsl.h * 100 / 360 + '%';
       }
     }
@@ -1259,64 +1262,68 @@ exports.default = {
     handleChange: function handleChange(e, skip) {
       !skip && e.preventDefault();
 
-      var container = this.$refs.container;
-      var containerWidth = container.clientWidth;
-      var containerHeight = container.clientHeight;
+      if (!this.disabled) {
+        var container = this.$refs.container;
+        var containerWidth = container.clientWidth;
+        var containerHeight = container.clientHeight;
 
-      var xOffset = container.getBoundingClientRect().left + window.pageXOffset;
-      var yOffset = container.getBoundingClientRect().top + window.pageYOffset;
-      var pageX = e.pageX || (e.touches ? e.touches[0].pageX : 0);
-      var pageY = e.pageY || (e.touches ? e.touches[0].pageY : 0);
-      var left = pageX - xOffset;
-      var top = pageY - yOffset;
+        var xOffset = container.getBoundingClientRect().left + window.pageXOffset;
+        var yOffset = container.getBoundingClientRect().top + window.pageYOffset;
+        var pageX = e.pageX || (e.touches ? e.touches[0].pageX : 0);
+        var pageY = e.pageY || (e.touches ? e.touches[0].pageY : 0);
+        var left = pageX - xOffset;
+        var top = pageY - yOffset;
 
-      var h;
-      var percent;
+        var h;
+        var percent;
 
-      if (this.direction === 'vertical') {
-        if (top < 0) {
-          h = 360;
-        } else if (top > containerHeight) {
-          h = 0;
+        if (this.direction === 'vertical') {
+          if (top < 0) {
+            h = 360;
+          } else if (top > containerHeight) {
+            h = 0;
+          } else {
+            percent = -(top * 100 / containerHeight) + 100;
+            h = 360 * percent / 100;
+          }
+
+          if (this.colors.hsl.h !== h) {
+            this.$emit('change', {
+              h: h,
+              s: this.colors.hsl.s,
+              l: this.colors.hsl.l,
+              a: this.colors.hsl.a,
+              source: 'hsl'
+            });
+          }
         } else {
-          percent = -(top * 100 / containerHeight) + 100;
-          h = 360 * percent / 100;
-        }
+          if (left < 0) {
+            h = 0;
+          } else if (left > containerWidth) {
+            h = 360;
+          } else {
+            percent = left * 100 / containerWidth;
+            h = 360 * percent / 100;
+          }
 
-        if (this.colors.hsl.h !== h) {
-          this.$emit('change', {
-            h: h,
-            s: this.colors.hsl.s,
-            l: this.colors.hsl.l,
-            a: this.colors.hsl.a,
-            source: 'hsl'
-          });
-        }
-      } else {
-        if (left < 0) {
-          h = 0;
-        } else if (left > containerWidth) {
-          h = 360;
-        } else {
-          percent = left * 100 / containerWidth;
-          h = 360 * percent / 100;
-        }
-
-        if (this.colors.hsl.h !== h) {
-          this.$emit('change', {
-            h: h,
-            s: this.colors.hsl.s,
-            l: this.colors.hsl.l,
-            a: this.colors.hsl.a,
-            source: 'hsl'
-          });
+          if (this.colors.hsl.h !== h) {
+            this.$emit('change', {
+              h: h,
+              s: this.colors.hsl.s,
+              l: this.colors.hsl.l,
+              a: this.colors.hsl.a,
+              source: 'hsl'
+            });
+          }
         }
       }
     },
     handleMouseDown: function handleMouseDown(e) {
-      this.handleChange(e, true);
-      window.addEventListener('mousemove', this.handleChange);
-      window.addEventListener('mouseup', this.handleMouseUp);
+      if (!this.disabled) {
+        this.handleChange(e, true);
+        window.addEventListener('mousemove', this.handleChange);
+        window.addEventListener('mouseup', this.handleMouseUp);
+      }
     },
     handleMouseUp: function handleMouseUp(e) {
       this.unbindEventListeners();
@@ -2064,7 +2071,8 @@ exports.default = {
       default: function _default() {
         return ['.80', '.65', '.50', '.35', '.20'];
       }
-    }
+    },
+    disabled: { type: Boolean, default: false }
   },
   components: {
     hue: _Hue2.default
@@ -2122,7 +2130,8 @@ exports.default = {
       default: function _default() {
         return ['.80', '.65', '.50', '.35', '.20'];
       }
-    }
+    },
+    disabled: { type: Boolean, default: false }
   },
   components: {
     light: _Light2.default
@@ -2164,7 +2173,8 @@ exports.default = {
   name: 'Light',
   props: {
     value: Object,
-    onChange: Function
+    onChange: Function,
+    disabled: { type: Boolean, default: false }
   },
   computed: {
     colors: function colors() {
@@ -2177,36 +2187,41 @@ exports.default = {
   methods: {
     handleChange: function handleChange(e, skip) {
       !skip && e.preventDefault();
-      var container = this.$refs.container;
-      var containerWidth = container.clientWidth;
 
-      var xOffset = container.getBoundingClientRect().left + window.pageXOffset;
-      var pageX = e.pageX || (e.touches ? e.touches[0].pageX : 0);
-      var left = pageX - xOffset;
+      if (!this.disabled) {
+        var container = this.$refs.container;
+        var containerWidth = container.clientWidth;
 
-      var l;
-      if (left < 0) {
-        l = 1;
-      } else if (left > containerWidth) {
-        l = 0;
-      } else {
-        l = 1 - Math.round(left * 100 / containerWidth) / 100;
-      }
+        var xOffset = container.getBoundingClientRect().left + window.pageXOffset;
+        var pageX = e.pageX || (e.touches ? e.touches[0].pageX : 0);
+        var left = pageX - xOffset;
 
-      if (this.colors.hsl.l !== l) {
-        this.$emit('change', {
-          h: this.colors.hsl.h,
-          s: this.colors.hsl.s,
-          l: l,
-          a: this.colors.a,
-          source: 'rgba'
-        });
+        var l;
+        if (left < 0) {
+          l = 1;
+        } else if (left > containerWidth) {
+          l = 0;
+        } else {
+          l = 1 - Math.round(left * 100 / containerWidth) / 100;
+        }
+
+        if (this.colors.hsl.l !== l) {
+          this.$emit('change', {
+            h: this.colors.hsl.h,
+            s: this.colors.hsl.s,
+            l: l,
+            a: this.colors.a,
+            source: 'rgba'
+          });
+        }
       }
     },
     handleMouseDown: function handleMouseDown(e) {
-      this.handleChange(e, true);
-      window.addEventListener('mousemove', this.handleChange);
-      window.addEventListener('mouseup', this.handleMouseUp);
+      if (!this.disabled) {
+        this.handleChange(e, true);
+        window.addEventListener('mousemove', this.handleChange);
+        window.addEventListener('mouseup', this.handleMouseUp);
+      }
     },
     handleMouseUp: function handleMouseUp() {
       this.unbindEventListeners();
@@ -4311,7 +4326,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.vc-hue {\n  position: absolute;\n  top: 0px;\n  right: 0px;\n  bottom: 0px;\n  left: 0px;\n  border-radius: 2px;\n}\n.vc-hue--horizontal {\n  background: linear-gradient(to right, #f00 0%, #ff0 17%, #0f0 33%, #0ff 50%, #00f 67%, #f0f 83%, #f00 100%);\n}\n.vc-hue--vertical {\n  background: linear-gradient(to top, #f00 0%, #ff0 17%, #0f0 33%, #0ff 50%, #00f 67%, #f0f 83%, #f00 100%);\n}\n.vc-hue-container {\n  cursor: pointer;\n  margin: 0 2px;\n  position: relative;\n  height: 100%;\n}\n.vc-hue-pointer {\n  z-index: 2;\n  position: absolute;\n}\n.vc-hue-picker {\n  cursor: pointer;\n  margin-top: 1px;\n  width: 4px;\n  border-radius: 1px;\n  height: 8px;\n  box-shadow: 0 0 2px rgba(0, 0, 0, .6);\n  background: #fff;\n  transform: translateX(-2px) ;\n}\n", ""]);
+exports.push([module.i, "\n.vc-hue {\n  position: absolute;\n  top: 0px;\n  right: 0px;\n  bottom: 0px;\n  left: 0px;\n  border-radius: 2px;\n}\n.vc-hue--horizontal {\n  background: linear-gradient(\n    to right,\n    #f00 0%,\n    #ff0 17%,\n    #0f0 33%,\n    #0ff 50%,\n    #00f 67%,\n    #f0f 83%,\n    #f00 100%\n  );\n}\n.vc-hue--vertical {\n  background: linear-gradient(\n    to top,\n    #f00 0%,\n    #ff0 17%,\n    #0f0 33%,\n    #0ff 50%,\n    #00f 67%,\n    #f0f 83%,\n    #f00 100%\n  );\n}\n.vc-hue-container {\n  cursor: pointer;\n  margin: 0 2px;\n  position: relative;\n  height: 100%;\n}\n.vc-hue-pointer {\n  z-index: 2;\n  position: absolute;\n}\n.vc-hue-picker {\n  cursor: pointer;\n  margin-top: 1px;\n  width: 4px;\n  border-radius: 1px;\n  height: 8px;\n  box-shadow: 0 0 2px rgba(0, 0, 0, 0.6);\n  background: #fff;\n  transform: translateX(-2px);\n}\n", ""]);
 
 // exports
 
@@ -6605,7 +6620,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.vc-slider[data-v-96bc990e] {\n  position: relative;\n  width: 410px;\n}\n.vc-slider-hue-warp[data-v-96bc990e] {\n  height: 20px;\n  position: relative;\n}\n.vc-slider-hue-warp[data-v-96bc990e] .vc-hue-picker {\n  width: 8px;\n  height: 24px;\n  border-radius: 0;\n  transform: translate(-4px, -3px);\n  background-color: rgb(248, 248, 248);\n  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37);\n}\n", ""]);
+exports.push([module.i, "\n.vc-slider[data-v-96bc990e] {\n  position: relative;\n  width: 410px;\n}\n.vc-slider-hue-warp[data-v-96bc990e] {\n  height: 20px;\n  position: relative;\n}\n.vc-slider-hue-warp[data-v-96bc990e] .vc-hue-picker {\n  width: 8px;\n  height: 24px;\n  border-radius: 0;\n  transform: translate(-4px, -3px);\n  background-color: rgb(248, 248, 248);\n  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37);\n}\n.disabled[data-v-96bc990e] {\n  opacity: 0.3;\n}\n", ""]);
 
 // exports
 
@@ -6623,6 +6638,7 @@ var render = function() {
     "div",
     {
       staticClass: "vc-slider",
+      class: { disabled: _vm.disabled },
       attrs: { role: "application", "aria-label": "Slider color picker" }
     },
     [
@@ -6631,6 +6647,7 @@ var render = function() {
         { staticClass: "vc-slider-hue-warp" },
         [
           _c("hue", {
+            attrs: { disabled: _vm.disabled },
             on: { change: _vm.hueChange },
             model: {
               value: _vm.colors,
@@ -6750,7 +6767,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.vc-slider[data-v-73e6e7d2] {\n  position: relative;\n  width: 410px;\n}\n.vc-slider-gray-warp[data-v-73e6e7d2] {\n  height: 20px;\n  position: relative;\n}\n.vc-slider-gray-warp[data-v-73e6e7d2] .vc-light-picker {\n  width: 8px;\n  height: 24px;\n  border-radius: 0;\n  transform: translate(-4px, -3px);\n  background-color: rgb(248, 248, 248);\n  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37);\n}\n", ""]);
+exports.push([module.i, "\n.vc-slider[data-v-73e6e7d2] {\n  position: relative;\n  width: 410px;\n}\n.vc-slider-gray-warp[data-v-73e6e7d2] {\n  height: 20px;\n  position: relative;\n}\n.vc-slider-gray-warp[data-v-73e6e7d2] .vc-light-picker {\n  width: 8px;\n  height: 24px;\n  border-radius: 0;\n  transform: translate(-4px, -3px);\n  background-color: rgb(248, 248, 248);\n  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37);\n}\n.disabled[data-v-73e6e7d2] {\n  opacity: 0.3;\n}\n", ""]);
 
 // exports
 
@@ -6916,6 +6933,7 @@ var render = function() {
     "div",
     {
       staticClass: "vc-slider",
+      class: { disabled: _vm.disabled },
       attrs: { role: "application", "aria-label": "Slider color picker" }
     },
     [
@@ -6924,6 +6942,7 @@ var render = function() {
         { staticClass: "vc-slider-gray-warp" },
         [
           _c("light", {
+            attrs: { disabled: _vm.disabled },
             on: { change: _vm.lightChange },
             model: {
               value: _vm.colors,

@@ -67,8 +67,9 @@ export default {
       if (this.direction === 'vertical') {
         return 0
       } else {
-        if (this.colors.hsl.h === 0 && this.pullDirection === 'right')
+        if (this.colors.hsl.h === 0 && this.pullDirection === 'right') {
           return '100%'
+        }
         return (this.colors.hsl.h * 100) / 360 + '%'
       }
     }
