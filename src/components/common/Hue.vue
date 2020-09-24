@@ -16,7 +16,10 @@
         :style="{ top: pointerTop, left: pointerLeft }"
         role="presentation"
       >
-        <div class="vc-hue-picker"></div>
+        <div
+          class="vc-hue-picker"
+          :class="{ hidden: disabled || hidePicker }"
+        ></div>
       </div>
     </div>
   </div>
@@ -32,7 +35,8 @@ export default {
       // [horizontal | vertical]
       default: 'horizontal'
     },
-    disabled: { type: Boolean, default: false }
+    disabled: { type: Boolean, default: false },
+    hidePicker: { type: Boolean, default: false }
   },
   data() {
     return {
@@ -205,5 +209,8 @@ export default {
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.6);
   background: #fff;
   transform: translateX(-2px);
+}
+.vc-hue-picker.hidden {
+  display: none;
 }
 </style>

@@ -6,7 +6,12 @@
     :class="{ disabled }"
   >
     <div class="vc-slider-hue-warp">
-      <hue v-model="colors" @change="hueChange" :disabled="disabled"></hue>
+      <hue
+        v-model="colors"
+        @change="hueChange"
+        :disabled="disabled"
+        :hide-picker="hidePicker"
+      ></hue>
     </div>
   </div>
 </template>
@@ -25,7 +30,8 @@ export default {
         return ['.80', '.65', '.50', '.35', '.20']
       }
     },
-    disabled: { type: Boolean, default: false }
+    disabled: { type: Boolean, default: false },
+    hidePicker: { type: Boolean, default: false }
   },
   components: {
     hue

@@ -1215,7 +1215,8 @@ exports.default = {
 
       default: 'horizontal'
     },
-    disabled: { type: Boolean, default: false }
+    disabled: { type: Boolean, default: false },
+    hidePicker: { type: Boolean, default: false }
   },
   data: function data() {
     return {
@@ -2072,7 +2073,8 @@ exports.default = {
         return ['.80', '.65', '.50', '.35', '.20'];
       }
     },
-    disabled: { type: Boolean, default: false }
+    disabled: { type: Boolean, default: false },
+    hidePicker: { type: Boolean, default: false }
   },
   components: {
     hue: _Hue2.default
@@ -2131,7 +2133,8 @@ exports.default = {
         return ['.80', '.65', '.50', '.35', '.20'];
       }
     },
-    disabled: { type: Boolean, default: false }
+    disabled: { type: Boolean, default: false },
+    hidePicker: { type: Boolean, default: false }
   },
   components: {
     light: _Light2.default
@@ -2174,7 +2177,8 @@ exports.default = {
   props: {
     value: Object,
     onChange: Function,
-    disabled: { type: Boolean, default: false }
+    disabled: { type: Boolean, default: false },
+    hidePicker: { type: Boolean, default: false }
   },
   computed: {
     colors: function colors() {
@@ -4326,7 +4330,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.vc-hue {\n  position: absolute;\n  top: 0px;\n  right: 0px;\n  bottom: 0px;\n  left: 0px;\n  border-radius: 2px;\n}\n.vc-hue--horizontal {\n  background: linear-gradient(\n    to right,\n    #f00 0%,\n    #ff0 17%,\n    #0f0 33%,\n    #0ff 50%,\n    #00f 67%,\n    #f0f 83%,\n    #f00 100%\n  );\n}\n.vc-hue--vertical {\n  background: linear-gradient(\n    to top,\n    #f00 0%,\n    #ff0 17%,\n    #0f0 33%,\n    #0ff 50%,\n    #00f 67%,\n    #f0f 83%,\n    #f00 100%\n  );\n}\n.vc-hue-container {\n  cursor: pointer;\n  margin: 0 2px;\n  position: relative;\n  height: 100%;\n}\n.vc-hue-pointer {\n  z-index: 2;\n  position: absolute;\n}\n.vc-hue-picker {\n  cursor: pointer;\n  margin-top: 1px;\n  width: 4px;\n  border-radius: 1px;\n  height: 8px;\n  box-shadow: 0 0 2px rgba(0, 0, 0, 0.6);\n  background: #fff;\n  transform: translateX(-2px);\n}\n", ""]);
+exports.push([module.i, "\n.vc-hue {\n  position: absolute;\n  top: 0px;\n  right: 0px;\n  bottom: 0px;\n  left: 0px;\n  border-radius: 2px;\n}\n.vc-hue--horizontal {\n  background: linear-gradient(\n    to right,\n    #f00 0%,\n    #ff0 17%,\n    #0f0 33%,\n    #0ff 50%,\n    #00f 67%,\n    #f0f 83%,\n    #f00 100%\n  );\n}\n.vc-hue--vertical {\n  background: linear-gradient(\n    to top,\n    #f00 0%,\n    #ff0 17%,\n    #0f0 33%,\n    #0ff 50%,\n    #00f 67%,\n    #f0f 83%,\n    #f00 100%\n  );\n}\n.vc-hue-container {\n  cursor: pointer;\n  margin: 0 2px;\n  position: relative;\n  height: 100%;\n}\n.vc-hue-pointer {\n  z-index: 2;\n  position: absolute;\n}\n.vc-hue-picker {\n  cursor: pointer;\n  margin-top: 1px;\n  width: 4px;\n  border-radius: 1px;\n  height: 8px;\n  box-shadow: 0 0 2px rgba(0, 0, 0, 0.6);\n  background: #fff;\n  transform: translateX(-2px);\n}\n.vc-hue-picker.hidden {\n  display: none;\n}\n", ""]);
 
 // exports
 
@@ -4366,7 +4370,12 @@ var render = function() {
             style: { top: _vm.pointerTop, left: _vm.pointerLeft },
             attrs: { role: "presentation" }
           },
-          [_c("div", { staticClass: "vc-hue-picker" })]
+          [
+            _c("div", {
+              staticClass: "vc-hue-picker",
+              class: { hidden: _vm.disabled || _vm.hidePicker }
+            })
+          ]
         )
       ]
     )
@@ -6647,7 +6656,7 @@ var render = function() {
         { staticClass: "vc-slider-hue-warp" },
         [
           _c("hue", {
-            attrs: { disabled: _vm.disabled },
+            attrs: { disabled: _vm.disabled, "hide-picker": _vm.hidePicker },
             on: { change: _vm.hueChange },
             model: {
               value: _vm.colors,
@@ -6865,7 +6874,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.vc-light[data-v-3ec7eee2] {\n  position: absolute;\n  top: 0px;\n  right: 0px;\n  bottom: 0px;\n  left: 0px;\n}\n.vc-light-gradient[data-v-3ec7eee2] {\n  position: absolute;\n  top: 0px;\n  right: 0px;\n  bottom: 0px;\n  left: 0px;\n}\n.vc-light-container[data-v-3ec7eee2] {\n  cursor: pointer;\n  position: relative;\n  z-index: 2;\n  height: 100%;\n  margin: 0 3px;\n}\n.vc-light-pointer[data-v-3ec7eee2] {\n  z-index: 2;\n  position: absolute;\n}\n.vc-light-picker[data-v-3ec7eee2] {\n  cursor: pointer;\n  width: 4px;\n  border-radius: 1px;\n  height: 8px;\n  box-shadow: 0 0 2px rgba(0, 0, 0, 0.6);\n  background: #fff;\n  margin-top: 1px;\n  transform: translateX(-2px);\n}\n", ""]);
+exports.push([module.i, "\n.vc-light[data-v-3ec7eee2] {\n  position: absolute;\n  top: 0px;\n  right: 0px;\n  bottom: 0px;\n  left: 0px;\n}\n.vc-light-gradient[data-v-3ec7eee2] {\n  position: absolute;\n  top: 0px;\n  right: 0px;\n  bottom: 0px;\n  left: 0px;\n}\n.vc-light-container[data-v-3ec7eee2] {\n  cursor: pointer;\n  position: relative;\n  z-index: 2;\n  height: 100%;\n  margin: 0 3px;\n}\n.vc-light-pointer[data-v-3ec7eee2] {\n  z-index: 2;\n  position: absolute;\n}\n.vc-light-picker[data-v-3ec7eee2] {\n  cursor: pointer;\n  width: 4px;\n  border-radius: 1px;\n  height: 8px;\n  box-shadow: 0 0 2px rgba(0, 0, 0, 0.6);\n  background: #fff;\n  margin-top: 1px;\n  transform: translateX(-2px);\n}\n.vc-light-picker.hidden[data-v-3ec7eee2] {\n  display: none;\n}\n", ""]);
 
 // exports
 
@@ -6903,7 +6912,12 @@ var render = function() {
             staticClass: "vc-light-pointer",
             style: { left: (1 - _vm.colors.hsl.l) * 100 + "%" }
           },
-          [_c("div", { staticClass: "vc-light-picker" })]
+          [
+            _c("div", {
+              staticClass: "vc-light-picker",
+              class: { hidden: _vm.disabled || _vm.hidePicker }
+            })
+          ]
         )
       ]
     )
@@ -6942,7 +6956,7 @@ var render = function() {
         { staticClass: "vc-slider-gray-warp" },
         [
           _c("light", {
-            attrs: { disabled: _vm.disabled },
+            attrs: { disabled: _vm.disabled, "hide-picker": _vm.hidePicker },
             on: { change: _vm.lightChange },
             model: {
               value: _vm.colors,

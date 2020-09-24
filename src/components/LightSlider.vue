@@ -10,6 +10,7 @@
         v-model="colors"
         @change="lightChange"
         :disabled="disabled"
+        :hide-picker="hidePicker"
       ></light>
     </div>
   </div>
@@ -29,7 +30,8 @@ export default {
         return ['.80', '.65', '.50', '.35', '.20']
       }
     },
-    disabled: { type: Boolean, default: false }
+    disabled: { type: Boolean, default: false },
+    hidePicker: { type: Boolean, default: false }
   },
   components: {
     light

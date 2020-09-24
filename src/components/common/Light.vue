@@ -12,7 +12,10 @@
         class="vc-light-pointer"
         :style="{ left: (1 - colors.hsl.l) * 100 + '%' }"
       >
-        <div class="vc-light-picker"></div>
+        <div
+          class="vc-light-picker"
+          :class="{ hidden: disabled || hidePicker }"
+        ></div>
       </div>
     </div>
   </div>
@@ -24,7 +27,8 @@ export default {
   props: {
     value: Object,
     onChange: Function,
-    disabled: { type: Boolean, default: false }
+    disabled: { type: Boolean, default: false },
+    hidePicker: { type: Boolean, default: false }
   },
   computed: {
     colors() {
@@ -120,5 +124,8 @@ export default {
   background: #fff;
   margin-top: 1px;
   transform: translateX(-2px);
+}
+.vc-light-picker.hidden {
+  display: none;
 }
 </style>
