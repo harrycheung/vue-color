@@ -81,6 +81,18 @@
       </div>
       <div class="demo-list">
         <div class="demo-item">
+          <sat-s-slider-picker v-model="colors"></sat-s-slider-picker>
+          <h2>Saturation S Slider</h2>
+        </div>
+      </div>
+      <div class="demo-list">
+        <div class="demo-item">
+          <sat-v-slider-picker v-model="colors"></sat-v-slider-picker>
+          <h2>Saturation V Slider</h2>
+        </div>
+      </div>
+      <div class="demo-list">
+        <div class="demo-item">
           <hue-slider-picker
             v-model="colors"
             :disabled="true"
@@ -130,6 +142,8 @@ import chrome from '../src/components/Chrome.vue'
 import photoshop from '../src/components/Photoshop.vue'
 import hueslider from '../src/components/HueSlider.vue'
 import lightslider from '../src/components/LightSlider.vue'
+import satsslider from '../src/components/SatSSlider.vue'
+import satvslider from '../src/components/SatVSlider.vue'
 
 let defaultProps = {
   hex: '#194d33e6',
@@ -165,7 +179,9 @@ export default {
     'chrome-picker': chrome,
     'photoshop-picker': photoshop,
     'hue-slider-picker': hueslider,
-    'light-slider-picker': lightslider
+    'light-slider-picker': lightslider,
+    'sat-s-slider-picker': satsslider,
+    'sat-v-slider-picker': satvslider
   },
   data() {
     return {

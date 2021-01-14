@@ -8,6 +8,7 @@ import Sketch from './components/Sketch.vue'
 import Chrome from './components/Chrome.vue'
 import HueSlider from './components/HueSlider.vue'
 import LightSlider from './components/LightSlider.vue'
+import SaturationSlider from './components/SaturationSlider.vue'
 import Alpha from './components/common/Alpha.vue'
 import Checkboard from './components/common/Checkboard.vue'
 import EditableInput from './components/common/EditableInput.vue'
@@ -27,6 +28,7 @@ const VueColor = {
   Chrome,
   HueSlider,
   LightSlider,
+  SaturationSlider,
   Alpha,
   Checkboard,
   EditableInput,
