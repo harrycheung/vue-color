@@ -95,7 +95,6 @@ export default {
         var top = pageY - yOffset
 
         var l
-        var percent
 
         if (this.direction === 'vertical') {
           if (top < 0) {

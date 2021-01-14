@@ -6,32 +6,32 @@
     :class="{ disabled }"
   >
     <div class="vc-slider-sat-warp">
-      <sat-s
+      <sat-v
         v-model="colors"
-        @change="satSChange"
+        @change="satVChange"
         :disabled="disabled"
         :hide-picker="hidePicker"
-      ></sat-s>
+      />
     </div>
   </div>
 </template>
 
 <script>
 import colorMixin from '../mixin/color'
-import satS from './common/SatS.vue'
+import satV from './common/SatV.vue'
 
 export default {
-  name: 'SatSSlider',
+  name: 'ValueSlider',
   mixins: [colorMixin],
   props: {
     disabled: { type: Boolean, default: false },
     hidePicker: { type: Boolean, default: false }
   },
   components: {
-    satS
+    satV
   },
   methods: {
-    satSChange(data) {
+    satVChange(data) {
       this.colorChange(data)
     }
   }
@@ -47,7 +47,7 @@ export default {
   height: 20px;
   position: relative;
 }
-.vc-slider-sat-warp >>> .vc-sat-s-picker {
+.vc-slider-sat-warp >>> .vc-sat-v-picker {
   width: 8px;
   height: 24px;
   border-radius: 0;

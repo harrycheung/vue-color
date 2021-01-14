@@ -142,8 +142,8 @@ import chrome from '../src/components/Chrome.vue'
 import photoshop from '../src/components/Photoshop.vue'
 import hueslider from '../src/components/HueSlider.vue'
 import lightslider from '../src/components/LightSlider.vue'
-import satsslider from '../src/components/SatSSlider.vue'
-import satvslider from '../src/components/SatVSlider.vue'
+import satsslider from '../src/components/SaturationSlider.vue'
+import satvslider from '../src/components/ValueSlider.vue'
 
 let defaultProps = {
   hex: '#194d33e6',
